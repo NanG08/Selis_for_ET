@@ -1,4 +1,7 @@
-const API_URL = '/api';
+// API URL Configuration
+// In development: Uses Vite proxy (localhost:3000)
+// In production/tunnel: Uses VITE_API_URL environment variable
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
   const token = localStorage.getItem('selis_token');
@@ -8,7 +11,8 @@ export async function fetchWithAuth(endpoint: string, options: RequestInit = {})
     ...options.headers,
   };
 
-  const response = await fetch(`${API_URL}${endpoint}`, { ...options, headers });
+  const url = API_URL.endsWith('/api') ? `${API_URL}${endpoint}` : `${API_URL}/api${endpoint}`;
+  const response = await fetch(url, { ...options, headers });
   if (!response.ok) {
     let errorMessage = 'Something went wrong';
     try {

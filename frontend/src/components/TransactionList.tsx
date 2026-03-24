@@ -15,7 +15,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { formatCurrency } from '../lib/currency';
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+if (!apiKey) {
+  console.warn('VITE_GEMINI_API_KEY is not set. AI features will not work.');
+}
+const ai = new GoogleGenAI({ apiKey: apiKey || 'dummy-key' });
 
 export default function TransactionList({ user }: { user: any }) {
   const [transactions, setTransactions] = useState<any[]>([]);

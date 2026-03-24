@@ -1,7 +1,0 @@
-{
-  "name": "Selis",
-  "description": "A minimal, intuitive full-stack money management platform for individuals, families, freelancers, and businesses.",
-  "requestFramePermissions": [
-    "geolocation"
-  ]
-}

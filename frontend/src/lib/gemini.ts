@@ -1,6 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+if (!apiKey) {
+  console.warn('VITE_GEMINI_API_KEY is not set in .env file');
+}
+const ai = new GoogleGenAI({ apiKey: apiKey || 'dummy-key' });
 
 export async function askSelisAI(prompt: string, context: any) {
   const model = "gemini-3-flash-preview";
