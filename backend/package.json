@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "lint": "tsc --noEmit"
+    "dev": "tsc-watch --onSuccess \"npm start\"",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -17,8 +15,12 @@
     "mongoose": "^9.3.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^7.2.0",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2"
   }

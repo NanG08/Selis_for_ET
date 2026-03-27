@@ -6,14 +6,14 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User, Transaction, Budget, Goal, Subscription } from './lib/models.ts';
+import { User, Transaction, Budget, Goal, Subscription } from './lib/models.js';
 
 dotenv.config({ path: path.join(process.cwd(), '../.env') });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.BACKEND_PORT || 3000;
+const PORT = Number(process.env.BACKEND_PORT) || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'selis-secret-key';
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -88,9 +88,9 @@ async function startServer() {
       await user.save();
       
       const token = jwt.sign({ id: user._id, email, plan: user.plan }, JWT_SECRET);
-      res.json({ token, user: { id: user._id, email, name, plan: user.plan } });
+      return res.json({ token, user: { id: user._id, email, name, plan: user.plan } });
     } catch (e) {
-      res.status(400).json({ error: 'Email already exists or registration failed' });
+      return res.status(400).json({ error: 'Email already exists or registration failed' });
     }
   });
 
@@ -103,12 +103,12 @@ async function startServer() {
       const user = await User.findOne({ email });
       if (user && await bcrypt.compare(password, user.password)) {
         const token = jwt.sign({ id: user._id, email, plan: user.plan }, JWT_SECRET);
-        res.json({ token, user: { id: user._id, email, name: user.name, plan: user.plan } });
+        return res.json({ token, user: { id: user._id, email, name: user.name, plan: user.plan } });
       } else {
-        res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(401).json({ error: 'Invalid credentials' });
       }
     } catch (e) {
-      res.status(500).json({ error: 'Login failed' });
+      return res.status(500).json({ error: 'Login failed' });
     }
   });
 
@@ -116,9 +116,9 @@ async function startServer() {
   app.get('/api/transactions', authenticateToken, async (req: any, res) => {
     try {
       const transactions = await Transaction.find({ userId: req.user.id }).sort({ date: -1 });
-      res.json(transactions.map(t => ({ ...t.toObject(), id: t._id })));
+      return res.json(transactions.map(t => ({ ...t.toObject(), id: t._id })));
     } catch (e) {
-      res.status(500).json({ error: 'Failed to fetch transactions' });
+      return res.status(500).json({ error: 'Failed to fetch transactions' });
     }
   });
 
@@ -127,9 +127,9 @@ async function startServer() {
       const { amount, category, date, description, type, planContext } = req.body;
       const tx = new Transaction({ userId: req.user.id, amount, category, date, description, type, planContext });
       await tx.save();
-      res.json({ ...tx.toObject(), id: tx._id });
+      return res.json({ ...tx.toObject(), id: tx._id });
     } catch (e) {
-      res.status(500).json({ error: 'Failed to create transaction' });
+      return res.status(500).json({ error: 'Failed to create transaction' });
     }
   });
 
@@ -137,9 +137,9 @@ async function startServer() {
   app.get('/api/budgets', authenticateToken, async (req: any, res) => {
     try {
       const budgets = await Budget.find({ userId: req.user.id });
-      res.json(budgets.map(b => ({ ...b.toObject(), id: b._id })));
+      return res.json(budgets.map(b => ({ ...b.toObject(), id: b._id })));
     } catch (e) {
-      res.status(500).json({ error: 'Failed to fetch budgets' });
+      return res.status(500).json({ error: 'Failed to fetch budgets' });
     }
   });
 
@@ -148,9 +148,9 @@ async function startServer() {
       const { category, limitAmount, planContext } = req.body;
       const budget = new Budget({ userId: req.user.id, category, limitAmount, planContext });
       await budget.save();
-      res.json({ ...budget.toObject(), id: budget._id });
+      return res.json({ ...budget.toObject(), id: budget._id });
     } catch (e) {
-      res.status(500).json({ error: 'Failed to create budget' });
+      return res.status(500).json({ error: 'Failed to create budget' });
     }
   });
 
@@ -158,9 +158,9 @@ async function startServer() {
   app.get('/api/goals', authenticateToken, async (req: any, res) => {
     try {
       const goals = await Goal.find({ userId: req.user.id });
-      res.json(goals.map(g => ({ ...g.toObject(), id: g._id })));
+      return res.json(goals.map(g => ({ ...g.toObject(), id: g._id })));
     } catch (e) {
-      res.status(500).json({ error: 'Failed to fetch goals' });
+      return res.status(500).json({ error: 'Failed to fetch goals' });
     }
   });
 
@@ -169,9 +169,9 @@ async function startServer() {
       const { name, targetAmount, currentAmount, deadline, planContext } = req.body;
       const goal = new Goal({ userId: req.user.id, name, targetAmount, currentAmount, deadline, planContext });
       await goal.save();
-      res.json({ ...goal.toObject(), id: goal._id });
+      return res.json({ ...goal.toObject(), id: goal._id });
     } catch (e) {
-      res.status(500).json({ error: 'Failed to create goal' });
+      return res.status(500).json({ error: 'Failed to create goal' });
     }
   });
 
@@ -179,9 +179,9 @@ async function startServer() {
   app.get('/api/subscriptions', authenticateToken, async (req: any, res) => {
     try {
       const subscriptions = await Subscription.find({ userId: req.user.id });
-      res.json(subscriptions.map(s => ({ ...s.toObject(), id: s._id })));
+      return res.json(subscriptions.map(s => ({ ...s.toObject(), id: s._id })));
     } catch (e) {
-      res.status(500).json({ error: 'Failed to fetch subscriptions' });
+      return res.status(500).json({ error: 'Failed to fetch subscriptions' });
     }
   });
 
@@ -190,18 +190,18 @@ async function startServer() {
       const { name, amount, frequency, nextBillingDate, planContext } = req.body;
       const sub = new Subscription({ userId: req.user.id, name, amount, frequency, nextBillingDate, planContext });
       await sub.save();
-      res.json({ ...sub.toObject(), id: sub._id });
+      return res.json({ ...sub.toObject(), id: sub._id });
     } catch (e) {
-      res.status(500).json({ error: 'Failed to create subscription' });
+      return res.status(500).json({ error: 'Failed to create subscription' });
     }
   });
 
   app.delete('/api/subscriptions/:id', authenticateToken, async (req: any, res) => {
     try {
       await Subscription.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
-      res.json({ success: true });
+      return res.json({ success: true });
     } catch (e) {
-      res.status(500).json({ error: 'Failed to delete subscription' });
+      return res.status(500).json({ error: 'Failed to delete subscription' });
     }
   });
 

@@ -33,6 +33,7 @@ import {
 import { api } from '../lib/api';
 import { motion } from 'motion/react';
 import { formatCurrency } from '../lib/currency';
+import { Link } from 'react-router-dom';
 
 const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
 
@@ -433,7 +434,7 @@ export default function Dashboard({ user }: { user: any }) {
       <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-semibold text-neutral-800">Recent Transactions</h3>
-          <button className="text-emerald-600 text-sm font-medium hover:underline">View All</button>
+          <Link to="/transactions" className="text-emerald-600 text-sm font-medium hover:underline">View All</Link>
         </div>
         <div className="space-y-4">
           {transactions.slice(0, 5).map((tx) => (
