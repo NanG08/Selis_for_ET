@@ -1,145 +1,108 @@
 # Selis
-**A Comprehensive Financial App for Insights and User Dashboard**
 
----
+AI-powered personal and business finance workspace with plan-aware dashboards, budgeting, transactions, goals, subscriptions, and assistant-guided insights.
 
-## Overview
-Selis is a cutting-edge financial application designed to provide users with in-depth financial insights and a personalized dashboard for managing their finances. The app is built with a robust backend and a user-friendly frontend, ensuring a seamless experience for users.
+## Highlights
 
----
+- Multi-plan UX: personal, family, freelancer, small_business, enterprise
+- Full-stack TypeScript architecture (React + Express + MongoDB)
+- JWT-secured API with user-scoped financial records
+- Gemini-powered assistant and smart transaction description suggestions
+- Responsive card + table UI with animated transitions
 
-## Features
-- **Financial Insights**: Gain a deeper understanding of your financial situation with our advanced analytics and reporting tools.
-- **User Dashboard**: Access a personalized dashboard that provides a clear overview of your financial health and goals.
-- **Budgeting and Planning**: Utilize our budgeting and planning features to create a tailored financial plan that suits your needs.
-- **Transaction Management**: Easily manage your transactions, including invoicing and expense tracking.
-- **Goal Setting and Tracking**: Set and track financial goals, such as saving for a specific purpose or paying off debt.
+## Documentation Hub
 
----
+All project docs live in [docs/README.md](docs/README.md).
 
-## Technology Stack
-- **Backend Framework**: Node.js with TypeScript
-- **Frontend Framework**: React with TypeScript
-- **Database**: MongoDB
-- **Programming Languages**: JavaScript, TypeScript
+- Architecture: [docs/architecture.md](docs/architecture.md)
+- Design: [docs/design.md](docs/design.md)
+- Workflows: [docs/workflows.md](docs/workflows.md)
+- API Reference: [docs/api-reference.md](docs/api-reference.md)
+- Integration Guide: [docs/integration-guide.md](docs/integration-guide.md)
+- Deployment Guide: [docs/deployment-guide.md](docs/deployment-guide.md)
 
----
+## Tech Stack
 
-## Installation
+- Frontend: React 19, Vite 6, TypeScript, Tailwind CSS, Recharts, Motion
+- Backend: Express 4, TypeScript, Mongoose, JWT, bcryptjs, CORS, dotenv
+- AI: `@google/genai` with Gemini model integration
+- Database: MongoDB
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/NanG08/Selis_for_ET.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd Selis_for_ET
-   ```
-3. Install dependencies for the backend:
-   ```bash
-   cd backend
-   npm install
-   ```
-4. Install dependencies for the frontend:
-   ```bash
-   cd frontend
-   npm install
-   ```
-5. Set up environment variables:
-   - Create a `.env` file in the `backend` directory and add your environment variables.
+## Project Layout
 
----
-
-## Usage
-
-1. Start the backend server:
-   ```bash
-   cd backend
-   npm run start
-   ```
-2. Start the frontend server:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-3. Access the application at:
-   ```
-   http://localhost:3000
-   ```
-
----
-
-## API Endpoints
-Please refer to the API documentation for available endpoints and usage.
-
----
-
-## Project Structure
-
-```plaintext
+```text
 Selis_for_ET/
-├── .env.example
-├── .gitignore  # gitignore file for GitHub
-├── LICENSE
-├── backend
-│   ├── lib
-│   │   └── models.ts
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── server.ts
-│   └── tsconfig.json
-└── frontend
-    ├── index.html
-    ├── package-lock.json
-    ├── package.json
-    ├── public
-    │   └── logo.png
-    ├── src
-    │   ├── App.tsx
-    │   ├── components
-    │   │   ├── AIChat.tsx
-    │   │   ├── Auth.tsx
-    │   │   ├── BudgetBuilder.tsx
-    │   │   ├── Dashboard.tsx
-    │   │   ├── GoalTracker.tsx
-    │   │   ├── InvoiceManager.tsx
-    │   │   ├── Layout.tsx
-    │   │   ├── PlanFeature.tsx
-    │   │   └── TransactionList.tsx
-    │   ├── index.css
-    │   ├── lib
-    │   │   ├── api.ts
-    │   │   ├── currency.ts
-    │   │   ├── gemini.ts
-    │   │   └── models.ts
-    │   └── main.tsx
-    ├── tsconfig.json
-    └── vite.config.ts
+  backend/
+    server.ts
+    lib/models.ts
+  frontend/
+    src/
+      App.tsx
+      components/
+      lib/
+  docs/
+    README.md
+    architecture.md
+    design.md
+    workflows.md
+    api-reference.md
+    integration-guide.md
+    deployment-guide.md
 ```
 
----
+## Quick Start
 
-## Future Enhancements
-- **Machine Learning Integration**: Integrate machine learning algorithms to provide personalized financial recommendations.
-- **Multi-User Support**: Add support for multiple users and roles.
-- **Enhanced Security**: Implement additional security measures to protect user data.
+### 1. Install dependencies
 
----
+```bash
+cd backend
+npm install
+cd ../frontend
+npm install
+```
 
-## Contribution Guidelines
+### 2. Configure environment
 
-Contributions are welcome! To contribute:
+Copy [.env.example](.env.example) to `.env` in the project root and set values.
+
+### 3. Start backend
+
+```bash
+cd backend
+npx tsc -p tsconfig.json
+npm start
+```
+
+### 4. Start frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend default: `http://localhost:5173`.
+
+## Core Source References
+
+- Backend API and middleware: [backend/server.ts](backend/server.ts)
+- Backend data schemas: [backend/lib/models.ts](backend/lib/models.ts)
+- Frontend routing shell: [frontend/src/App.tsx](frontend/src/App.tsx)
+- Frontend API client: [frontend/src/lib/api.ts](frontend/src/lib/api.ts)
+- Gemini integration: [frontend/src/lib/gemini.ts](frontend/src/lib/gemini.ts)
+
+## Current Known Gaps
+
+- Transaction delete is UI-only in [frontend/src/components/TransactionList.tsx](frontend/src/components/TransactionList.tsx).
+- Invoice manager currently uses mock entries in [frontend/src/components/InvoiceManager.tsx](frontend/src/components/InvoiceManager.tsx).
+- Backend has no dedicated `build` script in [backend/package.json](backend/package.json).
+
+## Contribution
+
 1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and submit a pull request.
-
----
+2. Create a feature branch.
+3. Commit with clear messages.
+4. Open a pull request with test notes.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
-
-## Author
-**NanG08**  
-[GitHub](https://github.com/NanG08) | [Other Contact Information]
+Licensed under Apache 2.0. See [LICENSE](LICENSE).
