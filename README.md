@@ -1,7 +1,5 @@
 # Selis - Smart Financial Management Platform
 
-AI-powered personal and business finance workspace with plan-aware dashboards, budgeting, transactions, goals, subscriptions, and assistant-guided insights powered by Google Gemini.
-
 ##  Project Overview
 
 Selis is a comprehensive financial management platform designed to serve multiple user segments from individuals to enterprises. The platform adapts its interface, features, and AI assistance based on the selected plan, providing tailored financial insights and management tools.
